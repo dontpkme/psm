@@ -16,6 +16,17 @@
 	<servlet-mapping> 
 		<servlet-name>API_Servlet</servlet-name> 
 		<url-pattern>/api/v1/*</url-pattern> 
-	</servlet-mapping> 
+	</servlet-mapping>
+	
+	
+	<filter>
+		<filter-name>Home_Filter</filter-name>
+		<filter-class>net.dpkm.psm.filter.HomeFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Home_Filter</filter-name>
+		<url-pattern>/</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
 
 </web-app> 
