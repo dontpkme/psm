@@ -2,12 +2,13 @@ package net.dpkm.psm.job;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import net.dpkm.psm.model.Article;
 import net.dpkm.psm.repository.ArticleRepository;
 import net.dpkm.psm.util.FetchHtmlUtil;
 
-public class UpdateDataJob {
+public class UpdateDataJob extends TimerTask {
 
 	private final String host = "https://www.ptt.cc";
 
