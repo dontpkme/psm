@@ -8,11 +8,13 @@ import java.util.Map;
 public abstract class ApiHandler {
 
 	public Object run(String queryString) throws UnsupportedEncodingException {
-		String[] paramString = queryString.split("&");
 		Map<String, String> params = new HashMap<String, String>();
-		for (String param : paramString) {
-			params.put(URLDecoder.decode(param.split("=")[0], "UTF-8"),
-					URLDecoder.decode(param.split("=")[1], "UTF-8"));
+		if (queryString != null) {
+			String[] paramString = queryString.split("&");
+			for (String param : paramString) {
+				params.put(URLDecoder.decode(param.split("=")[0], "UTF-8"),
+						URLDecoder.decode(param.split("=")[1], "UTF-8"));
+			}
 		}
 		return handle(params);
 	}

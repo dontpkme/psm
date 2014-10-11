@@ -1,6 +1,5 @@
 package net.dpkm.psm.repository;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,31 +21,6 @@ public class ArticleRepository {
 		return instance;
 	}
 
-	private void execute(String sql) {
-		System.out.println(sql);
-		Connection conn = DbUtil.getInstance().getConnection();
-		try {
-			conn.createStatement().execute(sql);
-			conn.close();
-		} catch (SQLException e) {
-			System.out.println("something wrong when execute sql");
-			throw new RuntimeException(e);
-		}
-	}
-
-	private ResultSet executeQuery(String sql) {
-		System.out.println(sql);
-		Connection conn = DbUtil.getInstance().getConnection();
-		try {
-			ResultSet rs = conn.createStatement().executeQuery(sql);
-			conn.close();
-			return rs;
-		} catch (SQLException e) {
-			System.out.println("something wrong when execute sql");
-			throw new RuntimeException(e);
-		}
-	}
-
 	public Article save(Article article) {
 		String sql = "INSERT INTO `article` (`title`, `author`, `date`, `marked`, `link`, `nrec`, `weight`) VALUES('"
 				+ article.getTitle()
@@ -63,7 +37,7 @@ public class ArticleRepository {
 				+ "', "
 				+ (article.getWeight() != null ? article.getWeight() : "null")
 				+ ")";
-		this.execute(sql);
+		DbUtil.getInstance().execute(sql);
 		return article;
 	}
 
@@ -74,7 +48,7 @@ public class ArticleRepository {
 				+ name
 				+ "%' and `weight` = 0) as `normal`, (select count(`weight`) from `article` where `title` like '%"
 				+ name + "%' and `weight` < 0) as `bad`";
-		ResultSet rs = executeQuery(sql);
+		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
 		Map<String, Float> result = new HashMap<String, Float>();
 		try {
 			while (rs.next()) {
@@ -94,7 +68,7 @@ public class ArticleRepository {
 				+ "%' and `weight` "
 				+ (weight == null ? "is null" : "=" + weight);
 
-		ResultSet rs = executeQuery(sql);
+		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
 		List<Article> result = new ArrayList<Article>();
 		try {
 			while (rs.next()) {
