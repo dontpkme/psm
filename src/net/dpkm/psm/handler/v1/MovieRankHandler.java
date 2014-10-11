@@ -10,7 +10,6 @@ public class MovieRankHandler extends ApiHandler {
 	@Override
 	public Object handle(Map<String, String> params) {
 		String name = params.get("name");
-		System.out.println(name);
 		return ArticleRepository.getInstance().findRanksByNameLike(name);
 	}
 }
