@@ -21,4 +21,12 @@ public class Movie {
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+	public Movie() {
+	}
+
+	public Movie(String name, String image) {
+		this.name = name;
+		this.image = image;
+	}
 }
