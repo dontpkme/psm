@@ -1,0 +1,15 @@
+.movie_item {
+	cursor: pointer;
+}
+
+.rank_good {
+	color: blue;
+}
+
+.rank_normal {
+	color: gray;
+}
+
+.rank_bad {
+	color: red;
+}
