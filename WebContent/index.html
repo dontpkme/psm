@@ -1,10 +1,22 @@
 <html>
 <head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="./js/package/handlebars-v2.0.0.js"></script>
 	<script type="text/javascript" src="./js/package/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="./js/index.js"></script>
+	
+	<link type="text/css" rel="stylesheet" href="./css/index.css" />
 </head>
 <body>
-	<H1 id="results">Index Hello World!</H1>
-	<input type="button" value="test" onclick="util.getRankByName();"/>
+	<h2>要看哪部電影?</h2>
+	<ol id="movielist"></ol>
+	<ul id="rank"></ul>
 </body>
 </html>
+
+
+<script id="rank-template" type="text/x-handlebars-template">
+<li class="rank_good">好雷：{{good_points}}分</li>
+<li class="rank_normal">普雷：{{normal_points}}分</li>
+<li class="rank_bad">負雷：{{bad_points}}分</li>
+</script>
