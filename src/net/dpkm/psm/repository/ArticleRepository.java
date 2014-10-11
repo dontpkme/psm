@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.dpkm.psm.model.Article;
 import net.dpkm.psm.util.DbUtil;
@@ -44,6 +45,10 @@ public class ArticleRepository {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public Map<String, Integer> findRanksByNameLike(String name) {
+		return null;
 	}
 
 	public List<Article> findArticlesByNameLikeAndWeight(String name,

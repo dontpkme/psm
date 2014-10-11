@@ -2,6 +2,7 @@ package net.dpkm.psm.handler.v1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.dpkm.psm.handler.ApiHandler;
 import net.dpkm.psm.model.Movie;
@@ -9,7 +10,7 @@ import net.dpkm.psm.model.Movie;
 public class NewMovieListHandler extends ApiHandler {
 
 	@Override
-	public Object run(String queryString) {
+	public Object handle(Map<String, String> params) {
 		List<Movie> movies = new ArrayList<Movie>();
 		Movie movie = new Movie();
 		movie.setName("露西");
