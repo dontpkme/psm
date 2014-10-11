@@ -16,7 +16,7 @@ public class UpdateMovieListJob extends TimerTask {
 		this.getNewMovies();
 	}
 
-	private List<Movie> getNewMovies() {
+	public List<Movie> getNewMovies() {
 		String url = host;
 		String context = FetchHtmlUtil.getHtmlFromUrlString(url);
 		String regex = "<div class=\"clearfix row\">";

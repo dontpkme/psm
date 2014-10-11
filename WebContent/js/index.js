@@ -39,7 +39,7 @@ var util = util || function() {
         		  success: function(data) {
         			  var items = "";
         			  $.each(data, function(index, movie) {
-        				  items += "<li class='movie_item' onclick='util.getRankByName(\""+movie.name+"\")'>"+movie.name+"</li>"
+        				  items += "<li class='movie_item' onclick='util.getRankByName(\""+movie.name+"\")'><img src='"+movie.image+"' title='"+movie.name+"'/>"+movie.name+"</li>"
         			  })
         			  $("#movielist").html(items);
         		  }
