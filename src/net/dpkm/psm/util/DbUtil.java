@@ -44,7 +44,13 @@ public class DbUtil {
 		return instance;
 	}
 
+	private String fixSql(String sql) {
+		sql = sql.replaceAll("\\\\", "\\\\\\\\");
+		return sql;
+	}
+
 	public void execute(String sql) {
+		sql = fixSql(sql);
 		if (showSql)
 			System.out.println(sql);
 		Connection conn = DbUtil.getInstance().getConnection();
@@ -58,6 +64,7 @@ public class DbUtil {
 	}
 
 	public ResultSet executeQuery(String sql) {
+		sql = fixSql(sql);
 		if (showSql)
 			System.out.println(sql);
 		Connection conn = DbUtil.getInstance().getConnection();
