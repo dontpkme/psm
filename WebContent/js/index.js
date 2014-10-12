@@ -34,7 +34,7 @@ var util = util || function() {
         },
         getNewMovieList: function(name) {
         	$.ajax({
-        		  url: "api/v1/new_movie_list",
+        		  url: "api/v1/movie_list",
         		  cache: false,
         		  success: function(data) {
         			  var items = "";

@@ -6,7 +6,7 @@
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"> 
 
 	<welcome-file-list> 
-		<welcome-file>test.jsp</welcome-file> 
+		<welcome-file>index.html</welcome-file> 
 	</welcome-file-list>
 	
 	<servlet> 
@@ -28,16 +28,24 @@
 		<url-pattern>/init</url-pattern> 
 	</servlet-mapping>
 	
+	<servlet> 
+		<servlet-name>Controller_Servlet</servlet-name> 
+		<servlet-class>net.dpkm.psm.servlet.ControllerServlet</servlet-class> 
+	</servlet> 
+	<servlet-mapping> 
+		<servlet-name>Controller_Servlet</servlet-name> 
+		<url-pattern>/g</url-pattern> 
+	</servlet-mapping>
 	
 	
 	<filter>
-		<filter-name>Home_Filter</filter-name>
-		<filter-class>net.dpkm.psm.filter.HomeFilter</filter-class>
+		<filter-name>Controller_Filter</filter-name>
+		<filter-class>net.dpkm.psm.filter.ControllerFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>Home_Filter</filter-name>
-		<url-pattern>/</url-pattern>
+		<filter-name>Controller_Filter</filter-name>
+		<url-pattern>/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 
-</web-app> 
+</web-app>

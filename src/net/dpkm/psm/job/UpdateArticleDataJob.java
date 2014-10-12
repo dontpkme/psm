@@ -99,7 +99,7 @@ public class UpdateArticleDataJob extends TimerTask {
 			}
 
 			// fetch date
-			date = tags[3].substring(tags[3].indexOf("date") + 7);
+			date = tags[3].substring(tags[3].indexOf("date") + 6);
 
 			// fetch author
 			author = tags[4].substring(tags[4].indexOf(">") + 1);

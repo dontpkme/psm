@@ -29,9 +29,10 @@ public class InitServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		PrintWriter out;
-		res.setContentType("text/plain;charset=utf-8");
+		res.setContentType("text/html;charset=utf-8");
 		out = res.getWriter();
-		out.println("FULL SCAN START IN 3 SECONDS!!");
+		out.flush();
+		out.println("<script> location.replace('./index.html'); </script>");
 		out.close();
 
 		Timer timer = new Timer();

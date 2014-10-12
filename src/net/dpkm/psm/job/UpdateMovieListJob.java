@@ -12,11 +12,17 @@ public class UpdateMovieListJob extends TimerTask {
 
 	private final String newMovieUrl = "https://tw.movies.yahoo.com/movie_thisweek.html";
 
+	private final String hotMovieUrl = "https://tw.movies.yahoo.com/chart.html?cate=taipei";
+
 	@Override
 	public void run() {
 		MovieRepository.getInstance().emptyTable();
-		List<Movie> newMovies = this.fetchNewMovies();
-		for (Movie movie : newMovies) {
+		// List<Movie> newMovies = this.fetchNewMovies();
+		// for (Movie movie : newMovies) {
+		// MovieRepository.getInstance().save(movie);
+		// }
+		List<Movie> hotMovies = this.fetchHotMovies();
+		for (Movie movie : hotMovies) {
 			MovieRepository.getInstance().save(movie);
 		}
 	}
@@ -34,13 +40,13 @@ public class UpdateMovieListJob extends TimerTask {
 			String name, image, url;
 
 			// fetch image
-			image = snippets[33];
+			image = snippets[21];
 
 			// fetch name
-			name = snippets[35];
+			name = snippets[23];
 
 			// fetch url
-			url = snippets[31];
+			url = snippets[19];
 
 			Movie movie = new Movie();
 			movie.setName(name);
@@ -50,6 +56,49 @@ public class UpdateMovieListJob extends TimerTask {
 			movies.add(movie);
 		}
 		return movies;
+	}
+
+	private List<Movie> fetchHotMovies() {
+		String context = FetchHtmlUtil.getHtmlFromUrlString(hotMovieUrl);
+		String regex = "<td class=\"c1\">";
+		String[] splited = context.split(regex);
+		List<Movie> movies = new ArrayList<Movie>();
+
+		for (int i = 1; i < splited.length; i++) {
+			String movieContext = splited[i];
+			String snippets[] = movieContext.split("<a href=\"");
+
+			String name, image, url;
+
+			// fetch url
+			url = snippets[1].split("\"")[0];
+
+			// fetch name
+			if (i == 1)
+				name = snippets[2].split(">")[1].split("<")[0];
+			else
+				name = snippets[1].split(">")[1].split("<")[0];
+
+			// fetch image
+			image = fetchImageByUrl(url);
+
+			Movie movie = new Movie();
+			movie.setName(name);
+			movie.setImage(image);
+			movie.setType(2);
+			movie.setUrl(url);
+			movies.add(movie);
+		}
+		return movies;
+	}
+
+	private String fetchImageByUrl(String url) {
+		String id = url.split("id=")[1];
+		String id1 = id.substring(0, 2);
+		String id2 = id.substring(2, 4);
+		String image = "https://s.yimg.com/fp/mpost2/" + id1 + "/" + id2 + "/"
+				+ id1 + id2 + ".jpg";
+		return image;
 	}
 
 	public static void main(String[] args) {

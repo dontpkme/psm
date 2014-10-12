@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class HomeFilter implements Filter {
+public class ControllerFilter implements Filter {
 
 	@Override
 	public void destroy() {
@@ -22,8 +22,14 @@ public class HomeFilter implements Filter {
 			FilterChain filter) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		httpRequest.getRequestDispatcher("/index.html").forward(httpRequest,
-				httpResponse);
+
+		String relativeUri = httpRequest.getRequestURI().split(
+				httpRequest.getContextPath())[1];
+		// System.out.println(relativeUri);
+		if (!relativeUri.equals("/") && !relativeUri.equals("/init")
+				&& relativeUri.split("/").length == 2)
+			httpRequest.getRequestDispatcher("/index.html").forward(
+					httpRequest, httpResponse);
 		filter.doFilter(httpRequest, httpResponse);
 	}
 

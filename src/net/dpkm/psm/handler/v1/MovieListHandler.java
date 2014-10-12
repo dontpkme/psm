@@ -5,10 +5,12 @@ import java.util.Map;
 import net.dpkm.psm.handler.ApiHandler;
 import net.dpkm.psm.repository.MovieRepository;
 
-public class NewMovieListHandler extends ApiHandler {
+public class MovieListHandler extends ApiHandler {
 
 	@Override
 	public Object handle(Map<String, String> params) {
-		return MovieRepository.getInstance().findMovieByType(1);
+		// int type = Integer.parseInt(params.get("type"));
+		int type = 2;
+		return MovieRepository.getInstance().findMovieByType(type);
 	}
 }

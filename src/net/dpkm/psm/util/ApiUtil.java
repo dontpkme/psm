@@ -3,8 +3,8 @@ package net.dpkm.psm.util;
 import net.dpkm.psm.enums.ApiName;
 import net.dpkm.psm.handler.ApiHandler;
 import net.dpkm.psm.handler.v1.MovieCommentHandler;
+import net.dpkm.psm.handler.v1.MovieListHandler;
 import net.dpkm.psm.handler.v1.MovieRankHandler;
-import net.dpkm.psm.handler.v1.NewMovieListHandler;
 
 public class ApiUtil {
 
@@ -21,8 +21,8 @@ public class ApiUtil {
 
 	private static ApiHandler doGetApi(ApiName name) {
 		switch (name) {
-		case new_movie_list:
-			return new NewMovieListHandler();
+		case movie_list:
+			return new MovieListHandler();
 		case movie_rank:
 			return new MovieRankHandler();
 		case movie_comment:
