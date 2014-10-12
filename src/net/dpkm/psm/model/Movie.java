@@ -2,9 +2,29 @@ package net.dpkm.psm.model;
 
 public class Movie {
 
-	public String name;
+	private String name;
 
-	public String image;
+	private String image;
+
+	private String url;
+
+	private int type;
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public String getName() {
 		return name;
@@ -19,14 +39,6 @@ public class Movie {
 	}
 
 	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public Movie() {
-	}
-
-	public Movie(String name, String image) {
-		this.name = name;
 		this.image = image;
 	}
 }

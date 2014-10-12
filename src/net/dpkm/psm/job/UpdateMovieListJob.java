@@ -5,43 +5,49 @@ import java.util.List;
 import java.util.TimerTask;
 
 import net.dpkm.psm.model.Movie;
+import net.dpkm.psm.repository.MovieRepository;
 import net.dpkm.psm.util.FetchHtmlUtil;
 
 public class UpdateMovieListJob extends TimerTask {
 
-	private final String host = "https://tw.movies.yahoo.com/movie_thisweek.html";
+	private final String newMovieUrl = "https://tw.movies.yahoo.com/movie_thisweek.html";
 
 	@Override
 	public void run() {
-		this.getNewMovies();
+		MovieRepository.getInstance().emptyTable();
+		List<Movie> newMovies = this.fetchNewMovies();
+		for (Movie movie : newMovies) {
+			MovieRepository.getInstance().save(movie);
+		}
 	}
 
-	public List<Movie> getNewMovies() {
-		String url = host;
-		String context = FetchHtmlUtil.getHtmlFromUrlString(url);
+	private List<Movie> fetchNewMovies() {
+		String context = FetchHtmlUtil.getHtmlFromUrlString(newMovieUrl);
 		String regex = "<div class=\"clearfix row\">";
 		String[] splited = context.split(regex);
 		List<Movie> movies = new ArrayList<Movie>();
 
 		for (int i = 1; i < splited.length; i++) {
 			String movieContext = splited[i];
-			String snippets[] = movieContext.split("<img src=\"")[2]
-					.split("\"");
+			String snippets[] = movieContext.split("\"");
 
-			String name, image;
+			String name, image, url;
 
 			// fetch image
-			image = snippets[0];
+			image = snippets[33];
 
 			// fetch name
-			name = snippets[2];
+			name = snippets[35];
 
-			System.out.println(name + " : " + image);
+			// fetch url
+			url = snippets[31];
 
-			Movie movie = new Movie(name, image);
+			Movie movie = new Movie();
+			movie.setName(name);
+			movie.setImage(image);
+			movie.setType(1);
+			movie.setUrl(url);
 			movies.add(movie);
-			// System.out.println(article);
-			// System.out.println("===============================");
 		}
 		return movies;
 	}
