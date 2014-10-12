@@ -21,7 +21,7 @@ var util = util || function() {
         				  }        				  
         			  });
         			  
-        			  var source   = $("#rank-template").html();
+        			  var source = $("#rank-template").html();
         			  var template = Handlebars.compile(source);
         			  var html = template({
         				  "good_points": good_points,
@@ -38,8 +38,10 @@ var util = util || function() {
         		  cache: false,
         		  success: function(data) {
         			  var items = "";
+        			  var source = $("#movie-template").html();
+        			  var template = Handlebars.compile(source);
         			  $.each(data, function(index, movie) {
-        				  items += "<li class='movie_item' onclick='util.getRankByName(\""+movie.name+"\")'><img src='"+movie.image+"' title='"+movie.name+"'/>"+movie.name+"</li>"
+            			  items += template(movie);
         			  })
         			  $("#movielist").html(items);
         		  }

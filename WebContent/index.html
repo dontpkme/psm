@@ -9,14 +9,19 @@
 </head>
 <body>
 	<h2>要看哪部電影?</h2>
-	<ol id="movielist"></ol>
+	<div id="movielist"></div>
 	<ul id="rank"></ul>
 </body>
 </html>
-
 
 <script id="rank-template" type="text/x-handlebars-template">
 <li class="rank_good">好雷：{{good_points}}分</li>
 <li class="rank_normal">普雷：{{normal_points}}分</li>
 <li class="rank_bad">負雷：{{bad_points}}分</li>
+</script>
+
+<script id="movie-template" type="text/x-handlebars-template">
+<span class="movie_item" onclick="util.getRankByName('{{name}}')">
+<img src="{{image}}" title="{{name}}" /><br />{{name}}
+</span>
 </script>

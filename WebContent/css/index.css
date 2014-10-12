@@ -1,5 +1,10 @@
+#movielist {
+	width: 100%;
+}
+
 .movie_item {
 	cursor: pointer;
+	display: inline-block;
 }
 
 .rank_good {
