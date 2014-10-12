@@ -8,10 +8,11 @@ import net.dpkm.psm.model.Article;
 import net.dpkm.psm.repository.ArticleRepository;
 import net.dpkm.psm.util.FetchHtmlUtil;
 
-public class UpdateDataJob extends TimerTask {
+public class UpdateArticleDataJob extends TimerTask {
 
 	private final String host = "https://www.ptt.cc";
 
+	@Override
 	public void run() {
 		run(1, -1);
 	}
@@ -119,10 +120,5 @@ public class UpdateDataJob extends TimerTask {
 		String[] splited = context.split(regex);
 		String page = splited[0].substring(splited[0].lastIndexOf("/") + 6);
 		return Integer.parseInt(page) + 1;
-	}
-
-	public static void main(String[] args) {
-		UpdateDataJob job = new UpdateDataJob();
-		job.run(100);
 	}
 }

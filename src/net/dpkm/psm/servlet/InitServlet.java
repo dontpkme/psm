@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.dpkm.psm.job.UpdateDataJob;
+import net.dpkm.psm.job.UpdateArticleDataJob;
 import net.dpkm.psm.job.UpdateMovieListJob;
 
 public class InitServlet extends HttpServlet {
@@ -35,7 +35,7 @@ public class InitServlet extends HttpServlet {
 		out.close();
 
 		Timer timer = new Timer();
-		UpdateDataJob job = new UpdateDataJob();
+		UpdateArticleDataJob job = new UpdateArticleDataJob();
 		timer.schedule(job, 3000);
 	}
 }
