@@ -10,10 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.dpkm.psm.job.UpdateDataJob;
+import net.dpkm.psm.job.UpdateMovieListJob;
 
 public class InitServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public void init() {
+		System.out
+				.println("=======================Movie List is Updating=======================");
+		Timer timer = new Timer();
+		UpdateMovieListJob job = new UpdateMovieListJob();
+		timer.schedule(job, 0);
+	}
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res)

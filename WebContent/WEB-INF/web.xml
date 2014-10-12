@@ -21,11 +21,13 @@
 	<servlet> 
 		<servlet-name>Init_Servlet</servlet-name> 
 		<servlet-class>net.dpkm.psm.servlet.InitServlet</servlet-class> 
+		<load-on-startup>1</load-on-startup>
 	</servlet> 
 	<servlet-mapping> 
 		<servlet-name>Init_Servlet</servlet-name> 
 		<url-pattern>/init</url-pattern> 
 	</servlet-mapping>
+	
 	
 	
 	<filter>
