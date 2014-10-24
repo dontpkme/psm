@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.dpkm.psm.job.UpdateArticleDataJob;
+import net.dpkm.psm.job.InitArticleDataJob;
 import net.dpkm.psm.job.UpdateMovieListJob;
+import net.dpkm.psm.job.UpdateArticleDataJob;
 
 public class InitServlet extends HttpServlet {
 
@@ -18,11 +19,13 @@ public class InitServlet extends HttpServlet {
 
 	@Override
 	public void init() {
-		System.out
-				.println("=======================Movie List is Updating=======================");
+		System.out.println("==================Movie List is Updating==================");
 		Timer timer = new Timer();
-		UpdateMovieListJob job = new UpdateMovieListJob();
-		timer.schedule(job, 0);
+		UpdateMovieListJob umlJob = new UpdateMovieListJob();
+		timer.schedule(umlJob, 0);
+		
+		UpdateArticleDataJob uadJob = new UpdateArticleDataJob();
+		timer.scheduleAtFixedRate(uadJob, 0, 1000 * 60 * 10);
 	}
 
 	@Override
@@ -36,7 +39,7 @@ public class InitServlet extends HttpServlet {
 		out.close();
 
 		Timer timer = new Timer();
-		UpdateArticleDataJob job = new UpdateArticleDataJob();
+		InitArticleDataJob job = new InitArticleDataJob();
 		timer.schedule(job, 3000);
 	}
 }

@@ -64,7 +64,7 @@ public class ArticleRepository {
 
 	public List<Article> findArticlesByNameLikeAndWeight(String name,
 			Float weight) {
-		String sql = "select * from article where `title` like '%" + name
+		String sql = "select * from `article` where `title` like '%" + name
 				+ "%' and `weight` "
 				+ (weight == null ? "is null" : "=" + weight);
 
@@ -77,6 +77,23 @@ public class ArticleRepository {
 						rs.getBoolean("marked"), rs.getString("nrec"),
 						rs.getString("link"));
 				result.add(article);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return result;
+	}
+	
+	public Article findTop1ArticleOrderByLinkDesc() {
+		String sql = "select * from `article` order by `link` desc limit 0, 1";
+		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
+		Article result = null;
+		try {
+			while (rs.next()) {
+				result = new Article(rs.getString("title"),
+						rs.getString("author"), rs.getString("date"),
+						rs.getBoolean("marked"), rs.getString("nrec"),
+						rs.getString("link"));
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
