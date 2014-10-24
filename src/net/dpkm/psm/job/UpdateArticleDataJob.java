@@ -14,7 +14,10 @@ public class UpdateArticleDataJob extends InitArticleDataJob {
 		System.out.println("do articles update.");
 		ArticleRepository articleRepository = ArticleRepository.getInstance();
 		Article latestArticle = articleRepository.findTop1ArticleOrderByLinkDesc();
-		latestTimestamp = fetchTimestampFromLink(latestArticle.getLink());
+		if(latestArticle==null)
+			latestTimestamp = 0;
+		else
+			latestTimestamp = fetchTimestampFromLink(latestArticle.getLink());
 		doUpdate();
 	}
 	
@@ -26,12 +29,20 @@ public class UpdateArticleDataJob extends InitArticleDataJob {
 			List<Article> articles = getArticles(nowPage);
 
 			for (Article article : articles) {
-				if(fetchTimestampFromLink(article.getLink()) > latestTimestamp) {
+				int timestamp;
+				try {
+					timestamp = fetchTimestampFromLink(article.getLink());
+				} catch(Exception e) {
+					System.out.println("article has been deleted.");
+					continue;
+				}
+				if(timestamp > latestTimestamp) {
 					System.out.println("found new article: " + article.getTitle());
 					ArticleRepository.getInstance().save(article);
 				} else {
 					nowPage = -1;
 				}
+				
 			}
 			nowPage--;
 		}
