@@ -41,13 +41,31 @@ public class ArticleRepository {
 		return article;
 	}
 
+	private List<String> getRelativeAliasName(String name) {
+		List<String> alias = new ArrayList<String>();
+		alias.add(name);
+		if (name.split("：").length > 1) {
+			alias.add(name.split("：")[0]);
+			alias.add(name.split("：")[1]);
+		}
+		return alias;
+	}
+
 	public Map<String, Float> findRanksByNameLike(String name) {
-		String sql = "select (select sum(`weight`) from `article` where `title` like '%"
-				+ name
-				+ "%' and `weight` > 0) as `good`, (select count(`weight`) from `article` where `title` like '%"
-				+ name
-				+ "%' and `weight` = 0) as `normal`, (select count(`weight`) from `article` where `title` like '%"
-				+ name + "%' and `weight` < 0) as `bad`";
+		List<String> alias = getRelativeAliasName(name);
+		String like = "";
+		for (String subname : alias) {
+			if (!like.equals(""))
+				like += " or ";
+			like += " (`title` like '%" + subname + "%') ";
+		}
+		like = " (" + like + ") ";
+		String sql = "select (select sum(`weight`) from `article` where "
+				+ like
+				+ " and `weight` > 0) as `good`, (select count(`weight`) from `article` where "
+				+ like
+				+ " and `weight` = 0) as `normal`, (select count(`weight`) from `article` where "
+				+ like + " and `weight` < 0) as `bad`";
 		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
 		Map<String, Float> result = new HashMap<String, Float>();
 		try {
@@ -83,7 +101,7 @@ public class ArticleRepository {
 		}
 		return result;
 	}
-	
+
 	public Article findTop1ArticleOrderByLinkDesc() {
 		String sql = "select * from `article` order by `link` desc limit 0, 1";
 		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
