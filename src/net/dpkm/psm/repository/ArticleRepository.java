@@ -44,9 +44,17 @@ public class ArticleRepository {
 	private List<String> getRelativeAliasName(String name) {
 		List<String> alias = new ArrayList<String>();
 		alias.add(name);
+		// break main title and sub title
 		if (name.split("：").length > 1) {
 			alias.add(name.split("：")[0]);
 			alias.add(name.split("：")[1]);
+		}
+
+		// replace punctuations to %
+		for (int i = 0; i < alias.size(); i++) {
+			alias.set(i, alias.get(i).replaceAll("，", "%"));
+			alias.set(i, alias.get(i).replaceAll("。", "%"));
+			alias.set(i, alias.get(i).replaceAll("！", "%"));
 		}
 		return alias;
 	}
