@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import net.dpkm.psm.model.MovieDetail;
 import net.dpkm.psm.util.DbUtil;
 
-public class MovieDetailRepository {
+public class MovieDetailRepository extends Repository {
 
 	private static MovieDetailRepository instance = null;
 
@@ -19,30 +19,30 @@ public class MovieDetailRepository {
 
 	public MovieDetail save(MovieDetail movieDetail) {
 		String sql = "INSERT INTO `moviedetail` (`cname`, `ename`, `age`, `ondate`, `type`, `time`, `director`, `actor`, `description`, `id`) VALUES ('"
-				+ movieDetail.getCname()
+				+ antiSQLInjection(movieDetail.getCname())
 				+ "', '"
-				+ movieDetail.getEname()
+				+ antiSQLInjection(movieDetail.getEname())
 				+ "', '"
-				+ movieDetail.getAge()
+				+ antiSQLInjection(movieDetail.getAge())
 				+ "', '"
-				+ movieDetail.getOndate()
+				+ antiSQLInjection(movieDetail.getOndate())
 				+ "', '"
-				+ movieDetail.getType()
+				+ antiSQLInjection(movieDetail.getType())
 				+ "', '"
-				+ movieDetail.getTime()
+				+ antiSQLInjection(movieDetail.getTime())
 				+ "', '"
-				+ movieDetail.getDirector()
+				+ antiSQLInjection(movieDetail.getDirector())
 				+ "', '"
-				+ movieDetail.getActor()
+				+ antiSQLInjection(movieDetail.getActor())
 				+ "', '"
-				+ movieDetail.getDescription()
+				+ antiSQLInjection(movieDetail.getDescription())
 				+ "', "
 				+ movieDetail.getId() + ")";
 		DbUtil.getInstance().execute(sql);
 		return movieDetail;
 	}
 
-	public MovieDetail findMovieById(int id) {
+	public MovieDetail findMovieDetailById(int id) {
 		String sql = "select * from `moviedetail` where `id`=" + id;
 		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
 		MovieDetail result = null;

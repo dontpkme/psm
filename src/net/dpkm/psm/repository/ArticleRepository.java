@@ -10,7 +10,7 @@ import java.util.Map;
 import net.dpkm.psm.model.Article;
 import net.dpkm.psm.util.DbUtil;
 
-public class ArticleRepository {
+public class ArticleRepository extends Repository {
 
 	private static ArticleRepository instance = null;
 
@@ -48,6 +48,12 @@ public class ArticleRepository {
 		if (name.split("：").length > 1) {
 			alias.add(name.split("：")[0]);
 			alias.add(name.split("：")[1]);
+		}
+		for (int i = 0; i < alias.size(); i++) {
+			if (name.split("─").length > 1) {
+				alias.add(name.split("─")[0]);
+				alias.add(name.split("─")[1]);
+			}
 		}
 
 		// replace punctuations to %

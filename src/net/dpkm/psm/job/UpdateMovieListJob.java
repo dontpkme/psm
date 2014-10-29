@@ -2,9 +2,12 @@ package net.dpkm.psm.job;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import net.dpkm.psm.model.Movie;
+import net.dpkm.psm.model.MovieDetail;
+import net.dpkm.psm.repository.MovieDetailRepository;
 import net.dpkm.psm.repository.MovieRepository;
 import net.dpkm.psm.util.FetchHtmlUtil;
 
@@ -24,6 +27,15 @@ public class UpdateMovieListJob extends TimerTask {
 		List<Movie> hotMovies = this.fetchHotMovies();
 		for (Movie movie : hotMovies) {
 			MovieRepository.getInstance().save(movie);
+			int id = Integer.parseInt(movie.getUrl().split("id=")[1]);
+			MovieDetail movieDetail = MovieDetailRepository.getInstance()
+					.findMovieDetailById(id);
+			if (movieDetail == null) {
+				Timer timer = new Timer();
+				InitMovieDetailJob job = new InitMovieDetailJob();
+				job.setId(id);
+				timer.schedule(job, 0);
+			}
 		}
 	}
 

@@ -8,7 +8,7 @@ import java.util.List;
 import net.dpkm.psm.model.Movie;
 import net.dpkm.psm.util.DbUtil;
 
-public class MovieRepository {
+public class MovieRepository extends Repository {
 
 	private static MovieRepository instance = null;
 
