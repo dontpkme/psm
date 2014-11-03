@@ -3,6 +3,7 @@ package net.dpkm.psm.util;
 import net.dpkm.psm.enums.ApiName;
 import net.dpkm.psm.handler.ApiHandler;
 import net.dpkm.psm.handler.v1.MovieCommentHandler;
+import net.dpkm.psm.handler.v1.MovieDetailHandler;
 import net.dpkm.psm.handler.v1.MovieListHandler;
 import net.dpkm.psm.handler.v1.MovieRankHandler;
 
@@ -27,6 +28,8 @@ public class ApiUtil {
 			return new MovieRankHandler();
 		case movie_comment:
 			return new MovieCommentHandler();
+		case movie_detail:
+			return new MovieDetailHandler();
 		default:
 			return null;
 		}

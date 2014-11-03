@@ -10,6 +10,8 @@ public class Movie {
 
 	private int type;
 
+	private int id;
+
 	public String getUrl() {
 		return url;
 	}
@@ -40,5 +42,14 @@ public class Movie {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public int getId() {
+		System.out.println(Integer.parseInt(this.getUrl().split("=")[1]));
+		return Integer.parseInt(this.getUrl().split("=")[1]);
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

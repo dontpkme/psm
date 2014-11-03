@@ -3,7 +3,9 @@ package net.dpkm.psm.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.dpkm.psm.model.Movie;
 import net.dpkm.psm.util.DbUtil;
@@ -35,17 +37,19 @@ public class MovieRepository extends Repository {
 		return movie;
 	}
 
-	public List<Movie> findMovieByType(int type) {
-		String sql = "select * from `movie` where `type`=" + type;
+	public List<Map<String, Object>> findMovieByType(int type) {
+		String sql = "select `moviedetail`.`id`,`moviedetail`.`cname`,`moviedetail`.`ename`,`movie`.`image`,`movie`.`url` from `movie`, `moviedetail` where SUBSTR(`movie`.`url`, -4) = `moviedetail`.`id` and `movie`.`type`="
+				+ type;
 		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
-		List<Movie> result = new ArrayList<Movie>();
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		try {
 			while (rs.next()) {
-				Movie movie = new Movie();
-				movie.setName(rs.getString("name"));
-				movie.setImage(rs.getString("image"));
-				movie.setUrl(rs.getString("url"));
-				movie.setType(rs.getInt("type"));
+				Map<String, Object> movie = new HashMap<String, Object>();
+				movie.put("id", rs.getInt("id"));
+				movie.put("cname", rs.getString("cname"));
+				movie.put("ename", rs.getString("ename"));
+				movie.put("image", rs.getString("image"));
+				movie.put("url", rs.getString("url"));
 				result.add(movie);
 			}
 		} catch (SQLException e) {

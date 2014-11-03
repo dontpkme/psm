@@ -1,3 +1,11 @@
+td:first-child {
+	width: 200px;
+}
+
+td:last-child {
+	width: 500px;
+}
+
 #movielist {
 	width: 100%;
 }

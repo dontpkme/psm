@@ -15,14 +15,30 @@
 </html>
 
 <script id="rank-template" type="text/x-handlebars-template">
-<li class="rank_good">好雷：{{good_points}}分</li>
-<li class="rank_normal">普雷：{{normal_points}}分</li>
-<li class="rank_bad">負雷：{{bad_points}}分</li>
+<table>
+	<tr>
+		<td>
+			<li class="rank_good">好雷：{{good_points}}分</li>
+			<li class="rank_normal">普雷：{{normal_points}}分</li>
+			<li class="rank_bad">負雷：{{bad_points}}分</li>
+		</td>
+		<td>
+			<li>片名：{{detail.cname}} ({{detail.ename}})</li>
+			<li>分級：{{detail.age}}</li>
+			<li>上映日期：{{detail.ondate}}</li>
+			<li>分類：{{detail.type}}</li>
+			<li>片長：{{detail.time}}</li>
+			<li>導演：{{detail.director}}</li>
+			<li>演員：{{detail.actor}}</li>
+			<li>電影描述：{{detail.description}}</li>
+		</td>
+	</tr>
+</table>
 </script>
 
 <script id="movie-template" type="text/x-handlebars-template">
-<span class="movie_item" onclick="util.getRankByName('{{name}}')">
-<img src="{{image}}" title="{{name}}" /><br />
-{{name}}
+<span class="movie_item" onclick="util.getRankByName('{{cname}}', {{id}})">
+<img src="{{image}}" title="{{cname}}" /><br />
+{{cname}} <br />{{ename}}
 </span>
 </script>
