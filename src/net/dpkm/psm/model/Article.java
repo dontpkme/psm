@@ -56,15 +56,17 @@ public class Article {
 			// System.out.println(label);
 
 			if (nrec.indexOf("X") != -1)
-				return 0f;
-			if (label.indexOf("普雷") != -1 || label.indexOf("普無雷") != -1)
+				return null;
+			if (label.indexOf("普雷") != -1 || label.indexOf("普無雷") != -1
+					|| label.indexOf("普有雷") != -1 || label.indexOf("普微雷") != -1)
 				return 0f;
 			else if (label.indexOf("負雷") != -1 || label.indexOf("負無雷") != -1
-					|| label.indexOf("負微雷") != -1 || label.indexOf("不好雷") != -1
-					|| label.indexOf("惡雷") != -1 || label.indexOf("爛雷") != -1)
+					|| label.indexOf("負微雷") != -1 || label.indexOf("負有雷") != -1
+					|| label.indexOf("不好雷") != -1 || label.indexOf("惡雷") != -1
+					|| label.indexOf("爛雷") != -1)
 				weight = -1f;
 			else if (label.indexOf("好雷") != -1 || label.indexOf("好無雷") != -1
-					|| label.indexOf("好微雷") != -1)
+					|| label.indexOf("好微雷") != -1 || label.indexOf("好有雷") != -1)
 				weight = 1f;
 
 			if (weight != null) {
@@ -74,8 +76,9 @@ public class Article {
 						|| label.indexOf("很") != -1 || label.indexOf("爆") != -1)
 					weight *= 1.5f;
 
-				if (label.indexOf("微") != -1 || label.indexOf("普") != -1)
-					weight *= 1.5f;
+				if ((label.indexOf("微") != -1 && label.indexOf("微雷") == -1)
+						|| label.indexOf("普") != -1)
+					weight *= 0.5f;
 			}
 		}
 

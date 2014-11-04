@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.dpkm.psm.model.Article;
+import net.dpkm.psm.model.MovieDetail;
 import net.dpkm.psm.util.DbUtil;
 
 public class ArticleRepository extends Repository {
@@ -41,7 +42,8 @@ public class ArticleRepository extends Repository {
 		return article;
 	}
 
-	private List<String> getRelativeAliasName(String name) {
+	private List<String> getRelativeAliasName(MovieDetail detail) {
+		String name = detail.getCname();
 		List<String> alias = new ArrayList<String>();
 		alias.add(name);
 		// break main title and sub title
@@ -65,21 +67,25 @@ public class ArticleRepository extends Repository {
 		return alias;
 	}
 
-	public Map<String, Float> findRanksByNameLike(String name) {
-		List<String> alias = getRelativeAliasName(name);
-		String like = "";
+	private String getWhereClause(List<String> alias, String ename) {
+		String where = "";
 		for (String subname : alias) {
-			if (!like.equals(""))
-				like += " or ";
-			like += " (`title` like '%" + subname + "%') ";
+			where += " (`title` like '%" + subname + "%') or ";
 		}
-		like = " (" + like + ") ";
+		where += " (lower(`title`) like '%" + ename.toLowerCase() + "%')";
+		where = " (" + where + ") ";
+		return where;
+	}
+
+	public Map<String, Float> findRanksByMovieDetail(MovieDetail detail) {
+		String where = getWhereClause(getRelativeAliasName(detail),
+				detail.getEname());
 		String sql = "select (select sum(`weight`) from `article` where "
-				+ like
+				+ where
 				+ " and `weight` > 0) as `good`, (select count(`weight`) from `article` where "
-				+ like
-				+ " and `weight` = 0) as `normal`, (select count(`weight`) from `article` where "
-				+ like + " and `weight` < 0) as `bad`";
+				+ where
+				+ " and `weight` = 0) as `normal`, (select sum(`weight`) from `article` where "
+				+ where + " and `weight` < 0) as `bad`";
 		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
 		Map<String, Float> result = new HashMap<String, Float>();
 		try {
@@ -94,11 +100,10 @@ public class ArticleRepository extends Repository {
 		}
 	}
 
-	public List<Article> findArticlesByNameLikeAndWeight(String name,
-			Float weight) {
-		String sql = "select * from `article` where `title` like '%" + name
-				+ "%' and `weight` "
-				+ (weight == null ? "is null" : "=" + weight);
+	public List<Article> findArticlesByMovieDetail(MovieDetail detail) {
+		String where = getWhereClause(getRelativeAliasName(detail),
+				detail.getEname());
+		String sql = "select * from `article` where " + where;
 
 		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
 		List<Article> result = new ArrayList<Article>();

@@ -1,10 +1,33 @@
 var util = util || function() {
 
     return {
-        getRankByName: function(name, id) {
+    	getArticleByIdAndRank: function(id, rank) {
+    		$.ajax({
+        		  url: "api/v1/article_list?id="+id,
+        		  cache: false,
+        		  async: false,
+        		  success: function(data) {
+        			  var subset;
+        			  var html = "";
+        			  if(rank=="good")
+        				  subset = data.good;
+        			  else if(rank=="normal")
+        				  subset = data.normal;
+        			  else if(rank=="bad")
+        				  subset = data.bad;
+        			  
+        			  $.each(subset, function(num, article) {
+        				  console.log(article.title);
+        				  html += "<li><a href='"+article.link+"' target='_blank'>"+article.title+"</a></li>"; 
+        			  });
+        			  $("#article-list").html(html);
+        		  }
+          	})
+    	},
+        getRankById: function(id) {
         	var good_points, normal_points, bad_points, detail;
         	$.ajax({
-      		  url: "api/v1/movie_rank?name="+name,
+      		  url: "api/v1/movie_rank?id="+id,
       		  cache: false,
       		  async: false,
       		  success: function(data) {
