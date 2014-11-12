@@ -73,7 +73,8 @@ public class Article {
 				if (label.indexOf("超") != -1 || label.indexOf("極") != -1
 						|| label.indexOf("神") != -1 || label.indexOf("大") != -1
 						|| label.indexOf("特") != -1 || label.indexOf("讚") != -1
-						|| label.indexOf("很") != -1 || label.indexOf("爆") != -1)
+						|| label.indexOf("很") != -1 || label.indexOf("爆") != -1
+						|| label.indexOf("巨") != -1)
 					weight *= 1.5f;
 
 				if ((label.indexOf("微") != -1 && label.indexOf("微雷") == -1)
