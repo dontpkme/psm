@@ -9,17 +9,9 @@
 	<script type="text/javascript" src="./js/cube.js"></script>
 	
 	<link type="text/css" rel="stylesheet" href="./css/index.css" />
-	<link type="text/css" rel="stylesheet" href="./css/cube.css" />
 	<link type="text/css" rel="stylesheet" href="./css/tweenmax.css" />
 </head>
 <body>
-	<h2>要看哪部電影?</h2>
-	<ul id="rank"></ul>
-	<div id="movielist"></div>
-
-
-
-
 	<div style="position:fixed; z-index:9999; top: 0px; left:0px">
 		<button onclick="left();">←</button>
 		<button onclick="right();">→</button>
@@ -77,16 +69,26 @@
   			</div>
 		</div>
 	</div>
+
+	<div class="movie-list-wrapper">
+		<div class="movie-list-left-wrapper">
+			<div id="movie-list-left"></div>
+		</div>
+		<div class="movie-list-right-wrapper">
+			<div id="movie-list-right"></div>
+		</div>
+	</div>
+	<ul id="rank"></ul>
 </body>
 </html>
 
-<script id="rank-template" type="text/x-handlebars-template">
+<script type="text/x-handlebars-template" id="rank-template">
 <table>
 	<tr>
 		<td>
-			<li class="rank_good">好雷：{{good_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'good')">評論</a></li>
-			<li class="rank_normal">普雷：{{normal_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'normal')">評論</a></li>
-			<li class="rank_bad">負雷：{{bad_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'bad')">評論</a></li>
+			<li class="rank-good">好雷：{{good_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'good')">評論</a></li>
+			<li class="rank-normal">普雷：{{normal_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'normal')">評論</a></li>
+			<li class="rank-bad">負雷：{{bad_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'bad')">評論</a></li>
 		</td>
 		<td>
 			<li>片名：{{detail.cname}} ({{detail.ename}})</li>
@@ -104,9 +106,8 @@
 </table>
 </script>
 
-<script id="movie-template" type="text/x-handlebars-template">
-<span class="movie_item" onclick="util.getRankById({{id}})">
-<img src="{{image}}" title="{{cname}}" /><br />
-{{cname}} <br />{{ename}}
+<script type="text/x-handlebars-template" id="movie-template">
+<span class="movie-item" onclick="util.getRankById({{id}})">
+	<img src="{{image}}" title="{{cname}} ({{ename}})" />
 </span>
 </script>
