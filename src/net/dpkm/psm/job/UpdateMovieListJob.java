@@ -23,19 +23,25 @@ public class UpdateMovieListJob extends TimerTask {
 		// List<Movie> newMovies = this.fetchNewMovies();
 		// for (Movie movie : newMovies) {
 		// MovieRepository.getInstance().save(movie);
+		// fetchMovieDetail(movie);
 		// }
+
 		List<Movie> hotMovies = this.fetchHotMovies();
 		for (Movie movie : hotMovies) {
 			MovieRepository.getInstance().save(movie);
-			int id = Integer.parseInt(movie.getUrl().split("id=")[1]);
-			MovieDetail movieDetail = MovieDetailRepository.getInstance()
-					.findMovieDetailById(id);
-			if (movieDetail == null) {
-				Timer timer = new Timer();
-				InitMovieDetailJob job = new InitMovieDetailJob();
-				job.setId(id);
-				timer.schedule(job, 0);
-			}
+			fetchMovieDetail(movie);
+		}
+	}
+
+	private void fetchMovieDetail(Movie movie) {
+		int id = Integer.parseInt(movie.getUrl().split("id=")[1]);
+		MovieDetail movieDetail = MovieDetailRepository.getInstance()
+				.findMovieDetailById(id);
+		if (movieDetail == null) {
+			Timer timer = new Timer();
+			InitMovieDetailJob job = new InitMovieDetailJob();
+			job.setId(id);
+			timer.schedule(job, 0);
 		}
 	}
 
@@ -58,7 +64,7 @@ public class UpdateMovieListJob extends TimerTask {
 			name = snippets[23];
 
 			// fetch url
-			url = snippets[19];
+			url = snippets[19].split("\\*")[1];
 
 			Movie movie = new Movie();
 			movie.setName(name);
@@ -83,7 +89,7 @@ public class UpdateMovieListJob extends TimerTask {
 			String name, image, url;
 
 			// fetch url
-			url = snippets[1].split("\"")[0];
+			url = snippets[1].split("\"")[0].split("\\*")[1];
 
 			// fetch name
 			if (i == 1)

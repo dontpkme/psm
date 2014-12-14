@@ -1,16 +1,82 @@
+<!doctype html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<script type="text/javascript" src="./js/package/handlebars-v2.0.0.js"></script>
 	<script type="text/javascript" src="./js/package/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="./js/package/TweenMax.min.js"></script>
 	<script type="text/javascript" src="./js/index.js"></script>
+	<script type="text/javascript" src="./js/cube.js"></script>
 	
 	<link type="text/css" rel="stylesheet" href="./css/index.css" />
+	<link type="text/css" rel="stylesheet" href="./css/cube.css" />
+	<link type="text/css" rel="stylesheet" href="./css/tweenmax.css" />
 </head>
 <body>
 	<h2>要看哪部電影?</h2>
 	<ul id="rank"></ul>
 	<div id="movielist"></div>
+
+
+
+
+	<div style="position:fixed; z-index:9999; top: 0px; left:0px">
+		<button onclick="left();">←</button>
+		<button onclick="right();">→</button>
+		<button onclick="go();">Boom</button>
+	</div>
+
+	<div id="container">
+		<div class="box-layer"></div>
+	</div>
+
+	<div id="wrapper">
+		<div id="experiment">
+  			<div id="cube">
+  				<div class="face two">
+    				<div class="popcorn-box"></div>
+    				<div class="poster"></div>
+    				<div class="popcorn-box-shadow"></div>
+    			</div>
+    			<div class="face two back">
+    				<div class="popcorn-box-back"></div>
+                    <div class="poster-back"></div>
+    				<div class="popcorn-box-back-shadow"></div>
+    			</div>
+    			<div class="face three">
+    				<div class="popcorn-box"></div>
+    				<div class="poster"></div>
+    				<div class="popcorn-box-shadow"></div>
+    			</div>
+    			<div class="face three back">
+    				<div class="popcorn-box-back"></div>
+                    <div class="poster-back"></div>
+                    <div class="popcorn-box-back-shadow"></div>
+    			</div>
+    			<div class="face four">
+    				<div class="popcorn-box"></div>
+    				<div class="poster"></div>
+    				<div class="popcorn-box-shadow"></div>
+    			</div>
+    			<div class="face four back">
+    				<div class="popcorn-box-back"></div>
+                    <div class="poster-back"></div>
+                    <div class="popcorn-box-back-shadow"></div>
+    			</div>
+    			<div class="face five">
+    				<div class="popcorn-box"></div>
+    				<div class="poster"></div>
+    				<div class="popcorn-box-shadow"></div>
+    			</div>
+    			<div class="face five back">
+    				<div class="popcorn-box-back"></div>
+                    <div class="poster-back"></div>
+                    <div class="popcorn-box-back-shadow"></div>
+    			</div>
+    			<div class="bottom six"></div>
+  			</div>
+		</div>
+	</div>
 </body>
 </html>
 

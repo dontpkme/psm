@@ -9,8 +9,6 @@ public class MovieListHandler extends ApiHandler {
 
 	@Override
 	public Object handle(Map<String, String> params) {
-		// int type = Integer.parseInt(params.get("type"));
-		int type = 2;
-		return MovieRepository.getInstance().findMovieByType(type);
+		return MovieRepository.getInstance().findMovieDistinctById();
 	}
 }

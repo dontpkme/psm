@@ -37,6 +37,26 @@ public class MovieRepository extends Repository {
 		return movie;
 	}
 
+	public List<Map<String, Object>> findMovieDistinctById() {
+		String sql = "select distinct `moviedetail`.`id`,`moviedetail`.`cname`,`moviedetail`.`ename`,`movie`.`image`,`movie`.`url` from `movie`, `moviedetail` where SUBSTR(`movie`.`url`, -4) = `moviedetail`.`id`";
+		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+		try {
+			while (rs.next()) {
+				Map<String, Object> movie = new HashMap<String, Object>();
+				movie.put("id", rs.getInt("id"));
+				movie.put("cname", rs.getString("cname"));
+				movie.put("ename", rs.getString("ename"));
+				movie.put("image", rs.getString("image"));
+				movie.put("url", rs.getString("url"));
+				result.add(movie);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return result;
+	}
+
 	public List<Map<String, Object>> findMovieByType(int type) {
 		String sql = "select `moviedetail`.`id`,`moviedetail`.`cname`,`moviedetail`.`ename`,`movie`.`image`,`movie`.`url` from `movie`, `moviedetail` where SUBSTR(`movie`.`url`, -4) = `moviedetail`.`id` and `movie`.`type`="
 				+ type;

@@ -1,0 +1,52 @@
+img {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000;
+  margin: 10px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+img:hover {
+  border-color: #fff;
+}
+.popcorn-layer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+.box-layer {
+  z-index: 1000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+#container {
+  width: 100%;
+}
+.popcorn {
+  width: 30px;
+  height: 30px;
+  background-image: url(../images/popcorn.png);
+  background-size: cover;
+  margin: 200px auto 0;
+  position: relative;
+}
+.totoro {
+  width: 40px;
+  height: 40px;
+  background-image: url(../images/totoro.png);
+  background-size: cover;
+  margin: 200px auto 0;
+  position: relative;
+  transform: rotate(30deg);
+}
+#popcorn-box {
+  width: 150px;
+  height: 150px;
+  background-image: url(../images/box.png);
+  background-size: cover;
+  margin: 200px auto 0;
+}
