@@ -1,6 +1,24 @@
 var xAngle = -20;
 var yAngle = 0;
 var shifting = false;
+var face = 0;
+
+function changePoster() {
+  var filename = util.movielist[util.movieindex].image.replace("mpost2", "mpost");
+  if (face < 0)
+    face = 3;
+  if (face > 3)
+    face = 0;
+
+  if (face == 0)
+    $("#cube .two .poster").css("background-image", "url(" + filename + ")");
+  if (face == 1)
+    $("#cube .five .poster").css("background-image", "url(" + filename + ")");
+  if (face == 3)
+    $("#cube .three .poster").css("background-image", "url(" + filename + ")");
+  if (face == 2)
+    $("#cube .four .poster").css("background-image", "url(" + filename + ")");
+}
 
 function left() {
   if (!shifting) {
@@ -32,6 +50,9 @@ function left() {
       });
 
     util.getRankById(util.movielist[util.movieindex].id);
+
+    face--;
+    changePoster();
   }
 }
 
@@ -65,6 +86,9 @@ function right() {
       });
 
     util.getRankById(util.movielist[util.movieindex].id);
+
+    face++;
+    changePoster();
   }
 }
 

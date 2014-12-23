@@ -2,6 +2,43 @@ var util = util || function() {
 
   var mSource = $("#movie-template").html();
   var mTemplate = Handlebars.compile(mSource);
+  var details = {};
+
+  function renderMovieDetail(id) {
+    $.each(eval("details.m" + id + ".rank"), function(type, num) {
+      switch (type) {
+        case "good":
+          good_points = num;
+          break;
+        case "normal":
+          normal_points = num;
+          break;
+        case "bad":
+          bad_points = num;
+          break;
+      }
+    });
+
+    if (eval("details.m" + id + ".detail").age == "1")
+      eval("details.m" + id + ".detail").age = "普通級";
+    if (eval("details.m" + id + ".detail").age == "2")
+      eval("details.m" + id + ".detail").age = "保護級";
+    if (eval("details.m" + id + ".detail").age == "3")
+      eval("details.m" + id + ".detail").age = "輔導級";
+    if (eval("details.m" + id + ".detail").age == "4")
+      eval("details.m" + id + ".detail").age = "限制級";
+    var detail = eval("details.m" + id + ".detail");
+
+    var source = $("#rank-template").html();
+    var template = Handlebars.compile(source);
+    var html = template({
+      "good_points": good_points,
+      "normal_points": normal_points,
+      "bad_points": bad_points,
+      "detail": detail
+    });
+    $("#rank").html(html);
+  }
 
   return {
     movieindex: 0,
@@ -29,54 +66,28 @@ var util = util || function() {
       })
     },
     getRankById: function(id) {
-      var good_points, normal_points, bad_points, detail;
-      $.ajax({
-        url: "api/v1/movie_rank?id=" + id,
-        cache: false,
-        // async: false,
-        success: function(data) {
-          $.each(data, function(type, num) {
-            switch (type) {
-              case "good":
-                good_points = num;
-                break;
-              case "normal":
-                normal_points = num;
-                break;
-              case "bad":
-                bad_points = num;
-                break;
-            }
-          });
-
-          $.ajax({
-            url: "api/v1/movie_detail?id=" + id,
-            cache: false,
-            success: function(data) {
-              if (data.age == "1")
-                data.age = "普通級";
-              if (data.age == "2")
-                data.age = "保護級";
-              if (data.age == "3")
-                data.age = "輔導級";
-              if (data.age == "4")
-                data.age = "限制級";
-              detail = data;
-
-              var source = $("#rank-template").html();
-              var template = Handlebars.compile(source);
-              var html = template({
-                "good_points": good_points,
-                "normal_points": normal_points,
-                "bad_points": bad_points,
-                "detail": detail
-              });
-              $("#rank").html(html);
-            }
-          })
-        }
-      })
-
+      var good_points, normal_points, bad_points;
+      if (eval("details.m" + id) == undefined) {
+        $.ajax({
+          url: "api/v1/movie_rank?id=" + id,
+          cache: false,
+          success: function(data) {
+            $.ajax({
+              url: "api/v1/movie_detail?id=" + id,
+              cache: false,
+              success: function(data2) {
+                details["m" + id] = {
+                  rank: data,
+                  detail: data2
+                };
+                renderMovieDetail(id);
+              }
+            })
+          }
+        })
+      } else {
+        renderMovieDetail(id);
+      }
     },
     getNewMovieList: function(name) {
       $.ajax({
@@ -97,13 +108,12 @@ var util = util || function() {
           leftdata.reverse();
           leftdata.unshift(leftdata[leftdata.length - 1]);
           leftdata.pop();
-          console.log(leftdata);
           items = "";
           $.each(leftdata, function(index, movie) {
             items += mTemplate(movie);
           })
           $("#movie-list-left").html(items);
-
+          $("#cube .two .poster").css("background-image", "url(" + util.movielist[0].image.replace("mpost2", "mpost") + ")");
           util.getRankById(util.movielist[0].id);
         }
       })
@@ -116,29 +126,26 @@ var util = util || function() {
 
 var init = function() {
   var list = util.getNewMovieList();
-  var index = 0;
-  var base = 150;
-  var pos = base;
-  var go = "";
-  $(".sense-area").scroll(function(e) {
+  var base = 5000;
+  $(".sense-area").bind("swipeleft", function(e) {
     if (!shifting) {
-      if ($(".sense-area").scrollTop() > pos) {
-        go = "down";
-        index++;
-      } else if ($(".sense-area").scrollTop() < pos) {
-        go = "up";
-        index--;
-      }
-      pos = base + index;
-      $(".sense-area").scrollTop(pos);
-      if (go == "down")
-        right();
-      if (go == "up")
-        left();
-
-      $(".sense-area").scrollTop(base);
-      go = "";
+      left();
     }
   });
-  $(".sense-area").scrollTop(pos);
+  $(".sense-area").bind("swiperight", function(e) {
+    if (!shifting) {
+      right();
+    }
+  });
+  $(".sense-area").bind("mousewheel", function(e) {
+    if (!shifting) {
+      if (e.originalEvent.wheelDelta > 0) {
+        left();
+      } else {
+        right();
+      }
+      $(".sense-area").scrollTop(base);
+    }
+  });
+  $(".sense-area").scrollTop(base);
 }();

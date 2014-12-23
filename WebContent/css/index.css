@@ -136,6 +136,7 @@ td:last-child {
 #cube .poster {
 	background-size: 250px 357px;
 	background-repeat: no-repeat;
+	background-color: #ffffff;
 	width: 250px;
 	height: 357px;
 }
@@ -151,7 +152,6 @@ td:last-child {
 	-webkit-transform: translateZ(125px) rotateY(180deg);
 }
 #cube .two .poster {
-	background-image: url(https://s.yimg.com/fp/mpost/50/69/5069.jpg);
 }
 #cube .three {
 	-webkit-transform: rotateY(90deg) translateZ(125px);
@@ -160,7 +160,6 @@ td:last-child {
 	-webkit-transform: rotateY(90deg) translateZ(125px) rotateY(180deg);
 }
 #cube .three .poster {
-	background-image: url(https://s.yimg.com/fp/mpost/54/21/5421.jpg);
 }
 #cube .four {
 	-webkit-transform: rotateY(180deg) translateZ(125px);
@@ -169,7 +168,6 @@ td:last-child {
 	-webkit-transform: rotateY(180deg) translateZ(125px) rotateY(180deg);
 }
 #cube .four .poster {
-	background-image: url(https://s.yimg.com/fp/mpost/53/43/5343.jpg);
 }
 #cube .five {
 	-webkit-transform: rotateY(-90deg) translateZ(125px);
@@ -178,7 +176,6 @@ td:last-child {
 	-webkit-transform: rotateY(-90deg) translateZ(125px) rotateY(180deg);
 }
 #cube .five .poster {
-	background-image: url(https://s.yimg.com/fp/mpost/53/97/5397.jpg);
 }
 #cube .six {
 	-webkit-transform: rotateX(-90deg) translateZ(320px);
@@ -204,4 +201,27 @@ td:last-child {
 	background: green;
 	opacity: 0;
 	overflow: auto;
+}
+.dummy {
+	height: 10000px;
+	width: 100px;
+}
+.ui-loading .ui-loader {
+	display: block;
+}
+.ui-loader {
+	display: none;
+	position: absolute;
+	opacity: .85;
+	z-index: 100;
+	left: 50%;
+	width: 200px;
+	margin-left: -130px;
+	margin-top: -35px;
+	padding: 10px 30px;
+}
+.ui-page,
+.ui-body-c.ui-page-active {
+	border: none;
+	outline: none;
 }
