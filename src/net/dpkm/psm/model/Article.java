@@ -65,12 +65,12 @@ public class Article {
 					|| label.indexOf("不好雷") != -1 || label.indexOf("惡雷") != -1
 					|| label.indexOf("爛雷") != -1)
 				weight = -1f;
-			else if (label.indexOf("好雷") != -1 || label.indexOf("好無雷") != -1
+			else if (label.indexOf("優雷") != -1 ||label.indexOf("好雷") != -1 || label.indexOf("好無雷") != -1
 					|| label.indexOf("好微雷") != -1 || label.indexOf("好有雷") != -1)
 				weight = 1f;
 
 			if (weight != null) {
-				if (label.indexOf("超") != -1 || label.indexOf("極") != -1
+				if (label.indexOf("尚") != -1 ||label.indexOf("優") != -1 ||label.indexOf("超") != -1 || label.indexOf("極") != -1
 						|| label.indexOf("神") != -1 || label.indexOf("大") != -1
 						|| label.indexOf("特") != -1 || label.indexOf("讚") != -1
 						|| label.indexOf("很") != -1 || label.indexOf("爆") != -1

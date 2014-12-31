@@ -74,15 +74,17 @@ public class ArticleRepository extends Repository {
 	private String getWhereClause(List<String> alias, String ename,
 			String ondate) {
 		String where = "";
-		int onDateNum = Integer.parseInt(ondate.split("-")[1]
-				+ ondate.split("-")[2]);
-		System.out.println(onDateNum);
+		int onDateNum = Integer.parseInt(
+				ondate.split("-")[0]+
+				ondate.split("-")[1]+ 
+				ondate.split("-")[2]);
+
 		for (String subname : alias) {
 			where += " (`title` like '%" + subname + "%') or ";
 		}
 		where += " (lower(`title`) like '%" + ename.toLowerCase() + "%')";
 		where = " (" + where + ") ";
-		where = "(" + where + " and `date` > " + onDateNum + ")";
+		where = "(" + where + " and length(`date`)=10 and convert(concat(substr(`date`, 1, 4),substr(`date`, 6, 2),substr(`date`, 9, 2)),UNSIGNED INTEGER) >= " + onDateNum + ")";
 		return where;
 	}
 

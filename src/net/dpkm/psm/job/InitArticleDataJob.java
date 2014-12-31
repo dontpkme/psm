@@ -87,6 +87,7 @@ public class InitArticleDataJob extends TimerTask {
 
 			// fetch date
 			date = tags[3].substring(tags[3].indexOf("date") + 6);
+			date = date.replace(" ", "0");
 
 			// fetch author
 			author = tags[4].substring(tags[4].indexOf(">") + 1);
