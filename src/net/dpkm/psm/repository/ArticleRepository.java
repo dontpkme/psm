@@ -3,6 +3,7 @@ package net.dpkm.psm.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +24,14 @@ public class ArticleRepository extends Repository {
 	}
 
 	public Article save(Article article) {
+		Date date = new Date();
 		String sql = "INSERT INTO `article` (`title`, `author`, `date`, `marked`, `link`, `nrec`, `weight`) VALUES('"
 				+ article.getTitle()
 				+ "', '"
 				+ article.getAuthor()
 				+ "', '"
+				+ (date.getYear() + 1900)
+				+ "/"
 				+ article.getDate()
 				+ "', "
 				+ (article.isMarked() ? "1" : "0")
@@ -67,19 +71,24 @@ public class ArticleRepository extends Repository {
 		return alias;
 	}
 
-	private String getWhereClause(List<String> alias, String ename) {
+	private String getWhereClause(List<String> alias, String ename,
+			String ondate) {
 		String where = "";
+		int onDateNum = Integer.parseInt(ondate.split("-")[1]
+				+ ondate.split("-")[2]);
+		System.out.println(onDateNum);
 		for (String subname : alias) {
 			where += " (`title` like '%" + subname + "%') or ";
 		}
 		where += " (lower(`title`) like '%" + ename.toLowerCase() + "%')";
 		where = " (" + where + ") ";
+		where = "(" + where + " and `date` > " + onDateNum + ")";
 		return where;
 	}
 
 	public Map<String, Float> findRanksByMovieDetail(MovieDetail detail) {
 		String where = getWhereClause(getRelativeAliasName(detail),
-				detail.getEname());
+				detail.getEname(), detail.getOndate());
 		String sql = "select (select sum(`weight`) from `article` where "
 				+ where
 				+ " and `weight` > 0) as `good`, (select count(`weight`) from `article` where "
@@ -102,7 +111,7 @@ public class ArticleRepository extends Repository {
 
 	public List<Article> findArticlesByMovieDetail(MovieDetail detail) {
 		String where = getWhereClause(getRelativeAliasName(detail),
-				detail.getEname());
+				detail.getEname(), detail.getOndate());
 		String sql = "select * from `article` where " + where;
 
 		ResultSet rs = DbUtil.getInstance().executeQuery(sql);
