@@ -75,17 +75,24 @@
 			<div id="movie-list-right"></div>
 		</div>
 	</div>
-	<ul id="rank"></ul>
+	<div id="rank"></div>
 </body>
 </html>
 
 <script type="text/x-handlebars-template" id="rank-template">
+<div class="ranks">
+	<div class="ranks-wrapper">
+		<div class="rank-good rank-circle">{{good_points}}</div>
+		<div class="rank-normal rank-circle">{{normal_points}}</div>
+		<div class="rank-bad rank-circle">{{bad_points}}</div>
+	</div>
+</div>
 <table>
 	<tr>
 		<td>
-			<li class="rank-good">好雷：{{good_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'good')">評論</a></li>
-			<li class="rank-normal">普雷：{{normal_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'normal')">評論</a></li>
-			<li class="rank-bad">負雷：{{bad_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'bad')">評論</a></li>
+			<li>好雷：{{good_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'good')">評論</a></li>
+			<li>普雷：{{normal_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'normal')">評論</a></li>
+			<li>負雷：{{bad_points}}分 <a href="#" onclick="util.getArticleByIdAndRank({{detail.id}}, 'bad')">評論</a></li>
 		</td>
 		<td>
 			<li>片名：{{detail.cname}} ({{detail.ename}})</li>

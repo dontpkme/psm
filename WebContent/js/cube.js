@@ -27,6 +27,16 @@ function left() {
     yAngle -= 90;
     $('#cube').css("webkitTransform", "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg)");
 
+    $("#movie-list-right span:first-child").remove();
+    $("#movie-list-right")
+      .css("margin-left", 122)
+      .append(util.renderMovieBlock(util.movieindex))
+      .animate({
+        "margin-left": "0",
+      }, 300, function() {
+        shifting = false;
+      });
+    
     util.movieindex--;
     if (util.movieindex < 0)
       util.movieindex = util.movielist.length - 1;
@@ -38,16 +48,6 @@ function left() {
       .animate({
         "margin-right": "0",
       }, 300, function() {});
-
-    $("#movie-list-right span:first-child").remove();
-    $("#movie-list-right")
-      .css("margin-left", 122)
-      .append(util.renderMovieBlock(util.movieindex))
-      .animate({
-        "margin-left": "0",
-      }, 300, function() {
-        shifting = false;
-      });
 
     util.getRankById(util.movielist[util.movieindex].id);
 
@@ -63,6 +63,16 @@ function right() {
     yAngle += 90;
     $('#cube').css("webkitTransform", "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg)");
 
+    $("#movie-list-left span:first-child").remove();
+    $("#movie-list-left")
+      .css("margin-right", 122)
+      .append(util.renderMovieBlock(util.movieindex))
+      .animate({
+        "margin-right": "0",
+      }, 300, function() {
+        shifting = false;
+      });    
+    
     util.movieindex++;
     if (util.movieindex == util.movielist.length)
       util.movieindex = 0;
@@ -74,16 +84,6 @@ function right() {
       .animate({
         "margin-left": "0",
       }, 300, function() {});
-
-    $("#movie-list-left span:first-child").remove();
-    $("#movie-list-left")
-      .css("margin-right", 122)
-      .append(util.renderMovieBlock(util.movieindex))
-      .animate({
-        "margin-right": "0",
-      }, 300, function() {
-        shifting = false;
-      });
 
     util.getRankById(util.movielist[util.movieindex].id);
 

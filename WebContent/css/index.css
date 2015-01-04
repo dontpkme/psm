@@ -23,18 +23,37 @@ td:last-child {
 	display: inline-block;
 	float: left;
 }
+.ranks {
+	height: 120px;
+	margin-bottom: 20px;
+}
+.ranks-wrapper {
+	width: 450px;
+	height: 120px;
+	margin: 0 auto;
+}
+.rank-circle {
+	float: left;
+	border-radius: 50%;
+	text-align:center;
+	width: 120px;
+	height: 120px;
+	color: #ffffff;
+	line-height: 120px;
+	margin: 0 15px;
+}
 .rank-good {
-	color: blue;
+	background-color: blue;
 }
 .rank-normal {
-	color: gray;
+	background-color: gray;
 }
 .rank-bad {
-	color: red;
+	background-color: red;
 }
 #rank {
 	position: relative;
-	top: -150px;
+	top: -180px;
 }
 .movie-list-wrapper {
 	position: relative;
