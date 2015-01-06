@@ -35,12 +35,12 @@ td:last-child {
 .rank-circle {
 	float: left;
 	border-radius: 50%;
-	text-align:center;
-	width: 120px;
-	height: 120px;
+	text-align: center;
+	width: 50px;
+	height: 50px;
 	color: #ffffff;
-	line-height: 120px;
-	margin: 0 15px;
+	line-height: 50px;
+	margin: 35px 50px;
 }
 .rank-good {
 	background-color: blue;
@@ -52,8 +52,11 @@ td:last-child {
 	background-color: red;
 }
 #rank {
-	position: relative;
-	top: -180px;
+	position: absolute;
+	left: 50%;
+	top: 30px;
+	margin-left: -225px;
+	z-index: 10;
 }
 .movie-list-wrapper {
 	position: relative;
@@ -210,16 +213,32 @@ td:last-child {
 	width: 100px;
 	height: 140px;
 }
-.sense-area {
-	position: absolute;
-	z-index: 9999;
-	top: 350px;
-	left: 0px;
-	width: 100%;
-	height: 300px;
-	background: green;
-	opacity: 0;
-	overflow: auto;
+@media screen and (min-width:768px) {
+	.sense-area {
+		position: absolute;
+		z-index: 9999;
+		top: 250px;
+		left: 50%;
+		width: 400px;
+		height: 400px;
+		background: green;
+		opacity: 0;
+		overflow: auto;
+		margin-left: -200px;
+	}
+}
+@media screen and (max-width:767px) {
+	.sense-area {
+		position: absolute;
+		z-index: 9999;
+		top: 350px;
+		left: 0px;
+		width: 100%;
+		height: 300px;
+		background: green;
+		opacity: 0;
+		overflow: auto;
+	}
 }
 .dummy {
 	height: 10000px;

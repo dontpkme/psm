@@ -15,6 +15,8 @@
 		<div class="dummy"></div>
 	</div>
 
+	<div id="rank"></div>
+
 	<div id="container">
 		<div class="box-layer"></div>
 	</div>
@@ -75,18 +77,20 @@
 			<div id="movie-list-right"></div>
 		</div>
 	</div>
-	<div id="rank"></div>
 </body>
 </html>
 
 <script type="text/x-handlebars-template" id="rank-template">
 <div class="ranks">
 	<div class="ranks-wrapper">
-		<div class="rank-good rank-circle">{{good_points}}</div>
-		<div class="rank-normal rank-circle">{{normal_points}}</div>
-		<div class="rank-bad rank-circle">{{bad_points}}</div>
+		<div class="rank-good rank-circle"></div>
+		<div class="rank-normal rank-circle"></div>
+		<div class="rank-bad rank-circle"></div>
 	</div>
 </div>
+</script>
+
+<script type="text/x-handlebars-template" id="detail-template">
 <table>
 	<tr>
 		<td>

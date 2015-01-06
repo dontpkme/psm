@@ -24,6 +24,7 @@ function left() {
   if (!shifting) {
     shifting = true;
 
+    clearInterval(util.timerId);
     yAngle -= 90;
     $('#cube').css("webkitTransform", "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg)");
 
@@ -36,7 +37,7 @@ function left() {
       }, 300, function() {
         shifting = false;
       });
-    
+
     util.movieindex--;
     if (util.movieindex < 0)
       util.movieindex = util.movielist.length - 1;
@@ -60,6 +61,7 @@ function right() {
   if (!shifting) {
     shifting = true;
 
+    clearInterval(util.timerId);
     yAngle += 90;
     $('#cube').css("webkitTransform", "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg)");
 
@@ -71,8 +73,8 @@ function right() {
         "margin-right": "0",
       }, 300, function() {
         shifting = false;
-      });    
-    
+      });
+
     util.movieindex++;
     if (util.movieindex == util.movielist.length)
       util.movieindex = 0;

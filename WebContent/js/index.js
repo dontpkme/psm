@@ -3,6 +3,8 @@ var util = util || function() {
   var mSource = $("#movie-template").html();
   var mTemplate = Handlebars.compile(mSource);
   var details = {};
+  var nowGood, nowNormal, nowBad;
+  var good_points, normal_points, bad_points;
 
   function renderMovieDetail(id) {
     $.each(eval("details.m" + id + ".rank"), function(type, num) {
@@ -14,7 +16,7 @@ var util = util || function() {
           normal_points = num;
           break;
         case "bad":
-          bad_points = num;
+          bad_points = num * -1;
           break;
       }
     });
@@ -32,17 +34,62 @@ var util = util || function() {
     var source = $("#rank-template").html();
     var template = Handlebars.compile(source);
     var html = template({
-      "good_points": good_points,
-      "normal_points": normal_points,
-      "bad_points": bad_points,
-      "detail": detail
+      // "good_points": good_points,
+      // "normal_points": normal_points,
+      // "bad_points": bad_points,
+      // "detail": detail
     });
+
+    nowGood = 0;
+    nowNormal = 0;
+    nowBad = 0;
+    util.timerId = setInterval(function() {
+      if (nowGood == good_points &&
+        nowBad == bad_points &&
+        nowNormal == normal_points) {
+        clearInterval(util.timerId);
+      }
+
+      $(".rank-good").html(nowGood).css({
+        "width": 50 + nowGood * 3 + "px",
+        "height": 50 + nowGood * 3 + "px",
+        "line-height": 50 + nowGood * 3 + "px",
+        "margin": (0 + ((70 - nowGood * 3) / 2)) + "px " + (15 + ((70 - nowGood * 3) / 2)) + "px"
+      });
+      $(".rank-normal").html(nowNormal).css({
+        "width": 50 + nowNormal * 3 + "px",
+        "height": 50 + nowNormal * 3 + "px",
+        "line-height": 50 + nowNormal * 3 + "px",
+        "margin": (0 + ((70 - nowNormal * 3) / 2)) + "px " + (15 + ((70 - nowNormal * 3) / 2)) + "px"
+      });
+      $(".rank-bad").html(nowBad).css({
+        "width": 50 + nowBad * 3 + "px",
+        "height": 50 + nowBad * 3 + "px",
+        "line-height": 50 + nowBad * 3 + "px",
+        "margin": (0 + ((70 - nowBad * 3) / 2)) + "px " + (15 + ((70 - nowBad * 3) / 2)) + "px"
+      });
+
+      if (nowGood < good_points)
+        nowGood++;
+      if (nowNormal < normal_points)
+        nowNormal++;
+      if (nowBad < bad_points)
+        nowBad++;
+
+      if (nowGood > good_points)
+        nowGood = good_points;
+      if (nowNormal > normal_points)
+        nowNormal = normal_points;
+      if (nowBad > bad_points)
+        nowBad = bad_points;
+    }, 100);
     $("#rank").html(html);
   }
 
   return {
     movieindex: 0,
     movielist: [],
+    timerId: 0,
     getArticleByIdAndRank: function(id, rank) {
       $.ajax({
         url: "api/v1/article_list?id=" + id,
@@ -66,7 +113,6 @@ var util = util || function() {
       })
     },
     getRankById: function(id) {
-      var good_points, normal_points, bad_points;
       if (eval("details.m" + id) == undefined) {
         $.ajax({
           url: "api/v1/movie_rank?id=" + id,
