@@ -47,6 +47,8 @@ td:last-child {
 }
 .rank-normal {
 	background-color: gray;
+	position: relative;
+	top: -20px;
 }
 .rank-bad {
 	background-color: red;

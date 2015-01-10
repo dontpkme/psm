@@ -82,7 +82,7 @@ var util = util || function() {
         nowNormal = normal_points;
       if (nowBad > bad_points)
         nowBad = bad_points;
-    }, 100);
+    }, 30);
     $("#rank").html(html);
   }
 
