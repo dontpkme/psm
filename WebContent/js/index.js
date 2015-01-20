@@ -3,6 +3,7 @@ var util = util || function() {
   var mSource = $("#movie-template").html();
   var mTemplate = Handlebars.compile(mSource);
   var details = {};
+  var articles = {};
   var nowGood, nowNormal, nowBad;
   var good_points, normal_points, bad_points;
 
@@ -86,33 +87,49 @@ var util = util || function() {
     $("#rank").html(html);
   }
 
+  function renderArticles(data) {
+    var rank = util.nowFilter;
+    var subset;
+    var html = "";
+    if (rank == "good")
+      subset = data.good;
+    else if (rank == "normal")
+      subset = data.normal;
+    else if (rank == "bad")
+      subset = data.bad;
+    if (subset != undefined) {
+      $.each(subset, function(num, article) {
+        html += "<li><a href='" + article.link + "' target='_blank'>" + article.title + "</a></li>";
+      });
+      $("#article-list").html(html);
+    }
+  }
+
   return {
     movieindex: 0,
     movielist: [],
+    movieId: 0,
+    nowFilter: "good",
     timerId: 0,
     getArticleByIdAndRank: function(id, rank) {
-      $.ajax({
-        url: "api/v1/article_list?id=" + id,
-        cache: false,
-        async: false,
-        success: function(data) {
-          var subset;
-          var html = "";
-          if (rank == "good")
-            subset = data.good;
-          else if (rank == "normal")
-            subset = data.normal;
-          else if (rank == "bad")
-            subset = data.bad;
-
-          $.each(subset, function(num, article) {
-            html += "<li><a href='" + article.link + "' target='_blank'>" + article.title + "</a></li>";
-          });
-          $("#article-list").html(html);
-        }
-      })
+      util.nowFilter = rank;
+      if (articles[id] == undefined) {
+        $.ajax({
+          url: "api/v1/article_list?id=" + id,
+          cache: false,
+          async: false,
+          success: function(data) {
+            articles[id] = data;
+            renderArticles(data);
+          }
+        });
+      } else {
+        renderArticles(articles[id]);
+      }
     },
     getRankById: function(id) {
+      util.movieId = id;
+      util.getArticleByIdAndRank(id, util.nowFilter);
       if (eval("details.m" + id) == undefined) {
         $.ajax({
           url: "api/v1/movie_rank?id=" + id,

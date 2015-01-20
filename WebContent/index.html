@@ -77,6 +77,14 @@
 			<div id="movie-list-right"></div>
 		</div>
 	</div>
+
+	<div class="article-filters">
+		<span class="article-filter" onclick="util.getArticleByIdAndRank(util.movieId, 'good')">好雷</span>
+		<span class="article-filter" onclick="util.getArticleByIdAndRank(util.movieId, 'normal')">普雷</span>
+		<span class="article-filter" onclick="util.getArticleByIdAndRank(util.movieId, 'bad')">負雷</span>
+	</div>
+	<div id="article-list">
+	</div>
 </body>
 </html>
 
@@ -108,8 +116,6 @@
 			<li>演員：{{detail.actor}}</li>
 			<li>電影描述：{{detail.description}}</li>
 		</td>
-		<td id="article-list">
-		</td>
 	</tr>
 </table>
 </script>
@@ -117,6 +123,12 @@
 <script type="text/x-handlebars-template" id="movie-template">
 <span class="movie-item" onclick="util.getRankById({{id}})">
 	<img src="{{image}}" title="{{cname}} ({{ename}})" />
+</span>
+</script>
+
+<script type="text/x-handlebars-template" id="article-template">
+<span class="article-item">
+	{{name}}
 </span>
 </script>
 

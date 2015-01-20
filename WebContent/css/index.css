@@ -265,3 +265,29 @@ td:last-child {
 	border: none;
 	outline: none;
 }
+.article-filters {
+	position: relative;
+	width: 400px;
+	height: 50px;
+	margin: 0 auto;
+	top: -150px;
+}
+.article-filter {
+	display: inline-block;
+	width: 130px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	cursor: pointer;
+	background-color: #dcdcdc;
+}
+.article-filter:hover {
+	background-color: #ababab;
+}
+#article-list {
+	position: relative;
+	width: 400px;
+	height: 100px;
+	margin: 0 auto;
+	top: -150px;
+}
