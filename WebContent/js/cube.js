@@ -117,7 +117,7 @@ function go(name) {
   var timeoutId = 0;
   var params = [];
   var i = 0;
-  var num = rand(0, 70);
+  var num = 30;
 
   if (name == undefined)
     name = "popcorn";
@@ -138,6 +138,7 @@ function go(name) {
       r: rand(0, 360)
     };
     params[i] = param;
+    name = "pop" + rand(1, 4);
     $("#container").append("<div id='popcorn-layer" + i + "' class='popcorn-layer'><div class='" + name + "' pid='" + i + "'></div></div>");
     $("#popcorn-layer" + i).css("z-index", 100 + i);
     $("#popcorn-layer" + i + " ." + name).css("left", param.ho + "px");
