@@ -122,7 +122,7 @@
 
 <script type="text/x-handlebars-template" id="movie-template">
 <span class="movie-item" onclick="util.getRankById({{id}})">
-	<img src="{{image}}" title="{{cname}} ({{ename}})" />
+	<div class="movie-img" title="{{cname}}{{#if ename}} ({{ename}}){{/if}}" style="background-image:url({{image}})"></div>
 </span>
 </script>
 

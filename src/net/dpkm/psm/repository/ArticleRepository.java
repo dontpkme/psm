@@ -85,6 +85,8 @@ public class ArticleRepository extends Repository {
 		}
 		if (!ename.equals(""))
 			where += " (lower(`title`) like '%" + ename.toLowerCase() + "%')";
+		else
+			where += " (1=0)";
 		where = " (" + where + ") ";
 		where = "("
 				+ where

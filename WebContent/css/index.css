@@ -211,10 +211,14 @@ td:last-child {
 	margin: 130px 0;
 	position: relative;
 }
-.movie-list-left-wrapper img,
-.movie-list-right-wrapper img {
-	width: 100px;
-	height: 140px;
+.movie-list-left-wrapper .movie-img,
+.movie-list-right-wrapper .movie-img {
+	width: 122px;
+	height: 160px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	display: inline-block;
 }
 @media screen and (min-width:768px) {
 	.sense-area {
