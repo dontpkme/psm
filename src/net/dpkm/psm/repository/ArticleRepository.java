@@ -83,7 +83,8 @@ public class ArticleRepository extends Repository {
 		for (String subname : alias) {
 			where += " (`title` like '%" + subname + "%') or ";
 		}
-		where += " (lower(`title`) like '%" + ename.toLowerCase() + "%')";
+		if (!ename.equals(""))
+			where += " (lower(`title`) like '%" + ename.toLowerCase() + "%')";
 		where = " (" + where + ") ";
 		where = "("
 				+ where
