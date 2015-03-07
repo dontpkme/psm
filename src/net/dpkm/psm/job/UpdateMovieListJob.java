@@ -83,29 +83,33 @@ public class UpdateMovieListJob extends TimerTask {
 		List<Movie> movies = new ArrayList<Movie>();
 
 		for (int i = 1; i < splited.length; i++) {
-			String movieContext = splited[i];
-			String snippets[] = movieContext.split("<a href=\"");
+			try {
+				String movieContext = splited[i];
+				String snippets[] = movieContext.split("<a href=\"");
 
-			String name, image, url;
+				String name, image, url;
 
-			// fetch url
-			url = snippets[1].split("\"")[0].split("\\*")[1];
+				// fetch url
+				url = snippets[1].split("\"")[0].split("\\*")[1];
 
-			// fetch name
-			if (i == 1)
-				name = snippets[2].split(">")[1].split("<")[0];
-			else
-				name = snippets[1].split(">")[1].split("<")[0];
+				// fetch name
+				if (i == 1)
+					name = snippets[2].split(">")[1].split("<")[0];
+				else
+					name = snippets[1].split(">")[1].split("<")[0];
 
-			// fetch image
-			image = fetchImageByUrl(url);
+				// fetch image
+				image = fetchImageByUrl(url);
 
-			Movie movie = new Movie();
-			movie.setName(name);
-			movie.setImage(image);
-			movie.setType(2);
-			movie.setUrl(url);
-			movies.add(movie);
+				Movie movie = new Movie();
+				movie.setName(name);
+				movie.setImage(image);
+				movie.setType(2);
+				movie.setUrl(url);
+				movies.add(movie);
+			} catch (Exception e) {
+				System.out.println("movie data extraction failed.");
+			}
 		}
 		return movies;
 	}
