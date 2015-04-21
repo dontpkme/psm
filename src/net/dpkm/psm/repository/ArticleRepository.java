@@ -81,9 +81,6 @@ public class ArticleRepository extends Repository {
 			nname = nname.replaceAll("[A-Za-z0-9]", "%");
 			float l = oname.length();
 			float e = nname.split("%").length - 1;
-			System.out.println(l);
-			System.out.println(e);
-			System.out.println(e / l);
 			if (e / l < 0.4)
 				alias.set(i, alias.get(i).replaceAll("[A-Za-z0-9]", "%"));
 
