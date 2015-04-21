@@ -3,7 +3,6 @@ package net.dpkm.psm.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,13 +23,12 @@ public class ArticleRepository extends Repository {
 	}
 
 	public Article save(Article article) {
-		Date date = new Date();
 		String sql = "INSERT INTO `article` (`title`, `author`, `date`, `marked`, `link`, `nrec`, `weight`) VALUES('"
 				+ article.getTitle()
 				+ "', '"
 				+ article.getAuthor()
 				+ "', '"
-				+ (date.getYear() + 1900)
+				+ article.getPostYear()
 				+ "/"
 				+ article.getDate()
 				+ "', "
@@ -55,18 +53,40 @@ public class ArticleRepository extends Repository {
 			alias.add(name.split("：")[0]);
 			alias.add(name.split("：")[1]);
 		}
-		for (int i = 0; i < alias.size(); i++) {
-			if (name.split("─").length > 1) {
+		int as = alias.size();
+		for (int i = 0; i < as; i++) {
+			if (alias.get(i).split("─").length > 1) {
 				alias.add(name.split("─")[0]);
 				alias.add(name.split("─")[1]);
 			}
 		}
+		as = alias.size();
+		for (int i = 0; i < as; i++) {
+			alias.add(name.split("─")[0]);
+		}
 
-		// replace punctuations to %
 		for (int i = 0; i < alias.size(); i++) {
+			// replace punctuations to %
 			alias.set(i, alias.get(i).replaceAll("，", "%"));
 			alias.set(i, alias.get(i).replaceAll("。", "%"));
 			alias.set(i, alias.get(i).replaceAll("！", "%"));
+			alias.set(i, alias.get(i).replaceAll("前篇", "%"));
+			alias.set(i, alias.get(i).replaceAll("後篇", "%"));
+			alias.set(i, alias.get(i).replaceAll("上篇", "%"));
+			alias.set(i, alias.get(i).replaceAll("下篇", "%"));
+
+			// remove English and number character if necessary
+			String oname = alias.get(i);
+			String nname = " " + oname + " ";
+			nname = nname.replaceAll("[A-Za-z0-9]", "%");
+			float l = oname.length();
+			float e = nname.split("%").length - 1;
+			System.out.println(l);
+			System.out.println(e);
+			System.out.println(e / l);
+			if (e / l < 0.4)
+				alias.set(i, alias.get(i).replaceAll("[A-Za-z0-9]", "%"));
+
 		}
 		return alias;
 	}
@@ -83,9 +103,16 @@ public class ArticleRepository extends Repository {
 		for (String subname : alias) {
 			where += " (`title` like '%" + subname + "%') or ";
 		}
-		if (!ename.equals(""))
-			where += " (lower(`title`) like '%" + ename.toLowerCase() + "%')";
-		else
+		if (!ename.equals("")) {
+			if (ename.indexOf(":") > -1) {
+				where += " (lower(`title`) like '%"
+						+ ename.split(":")[0].toLowerCase().trim()
+						+ "%') or (lower(`title`) like '%"
+						+ ename.split(":")[1].toLowerCase().trim() + "%')";
+			} else
+				where += " (lower(`title`) like '%"
+						+ ename.toLowerCase().trim() + "%')";
+		} else
 			where += " (1=0)";
 		where = " (" + where + ") ";
 		where = "("

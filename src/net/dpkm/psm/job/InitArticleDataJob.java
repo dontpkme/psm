@@ -1,6 +1,7 @@
 package net.dpkm.psm.job;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -16,11 +17,6 @@ public class InitArticleDataJob extends TimerTask {
 	public void run() {
 		System.out.println("do articles initial.");
 		run(1, -1);
-	}
-
-	private void run(int latestPages) {
-		int latestPage = this.getLatestPage();
-		run(latestPage - latestPages + 1, latestPage);
 	}
 
 	private void run(int min, int max) {
@@ -39,12 +35,23 @@ public class InitArticleDataJob extends TimerTask {
 		if (min < 1)
 			min = 1;
 
+		String postYear = String.valueOf(new Date().getYear() + 1900);
+		String lastPostDate = "";
+		int changeYearPage = latestPage;
 		for (int i = max; i >= min; i--) {
 			System.out.println("we are now at page " + i);
 			List<Article> articles = getArticles(i);
 
 			for (Article article : articles) {
+				if (lastPostDate.equals("01/01")
+						&& article.getDate().equals("12/31")
+						&& changeYearPage - i > 2) {
+					postYear = String.valueOf(Integer.parseInt(postYear) - 1);
+					changeYearPage = i;
+				}
+				article.setPostYear(postYear);
 				ArticleRepository.getInstance().save(article);
+				lastPostDate = article.getDate();
 			}
 		}
 	}
@@ -62,6 +69,8 @@ public class InitArticleDataJob extends TimerTask {
 
 			String title, author, date, nrec, link;
 			boolean marked;
+
+			// fetch articleId
 
 			// fetch nrec
 			nrec = tags[0].substring(tags[0].indexOf(">") + 1);

@@ -1,5 +1,7 @@
 package net.dpkm.psm.model;
 
+import java.util.Date;
+
 public class Article {
 
 	/**
@@ -37,6 +39,8 @@ public class Article {
 	 */
 	private Float weight;
 
+	private String postYear = String.valueOf(new Date().getYear() + 1900);
+
 	public Article(String title, String author, String date, boolean marked,
 			String nrec, String link) {
 		this.title = title;
@@ -46,6 +50,13 @@ public class Article {
 		this.nrec = nrec;
 		this.link = link;
 		this.weight = calculateWeightByTitle(title, nrec);
+	}
+
+	public Article(String title, String author, String date, boolean marked,
+			String nrec, String link, String postYear) {
+		this(title, author, date, marked, nrec, link);
+		this.postYear = postYear;
+
 	}
 
 	private Float calculateWeightByTitle(String title, String nrec) {
@@ -65,12 +76,14 @@ public class Article {
 					|| label.indexOf("不好雷") != -1 || label.indexOf("惡雷") != -1
 					|| label.indexOf("爛雷") != -1)
 				weight = -1f;
-			else if (label.indexOf("優雷") != -1 ||label.indexOf("好雷") != -1 || label.indexOf("好無雷") != -1
-					|| label.indexOf("好微雷") != -1 || label.indexOf("好有雷") != -1)
+			else if (label.indexOf("優雷") != -1 || label.indexOf("好雷") != -1
+					|| label.indexOf("好無雷") != -1 || label.indexOf("好微雷") != -1
+					|| label.indexOf("好有雷") != -1)
 				weight = 1f;
 
 			if (weight != null) {
-				if (label.indexOf("尚") != -1 ||label.indexOf("優") != -1 ||label.indexOf("超") != -1 || label.indexOf("極") != -1
+				if (label.indexOf("尚") != -1 || label.indexOf("優") != -1
+						|| label.indexOf("超") != -1 || label.indexOf("極") != -1
 						|| label.indexOf("神") != -1 || label.indexOf("大") != -1
 						|| label.indexOf("特") != -1 || label.indexOf("讚") != -1
 						|| label.indexOf("很") != -1 || label.indexOf("爆") != -1
@@ -140,6 +153,14 @@ public class Article {
 
 	public Float getWeight() {
 		return weight;
+	}
+
+	public String getPostYear() {
+		return postYear;
+	}
+
+	public void setPostYear(String postYear) {
+		this.postYear = postYear;
 	}
 
 	@Override

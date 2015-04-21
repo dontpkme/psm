@@ -20,11 +20,11 @@ public class UpdateMovieListJob extends TimerTask {
 	@Override
 	public void run() {
 		MovieRepository.getInstance().emptyTable();
-		// List<Movie> newMovies = this.fetchNewMovies();
-		// for (Movie movie : newMovies) {
-		// MovieRepository.getInstance().save(movie);
-		// fetchMovieDetail(movie);
-		// }
+		List<Movie> newMovies = this.fetchNewMovies();
+		for (Movie movie : newMovies) {
+			MovieRepository.getInstance().save(movie);
+			fetchMovieDetail(movie);
+		}
 
 		List<Movie> hotMovies = this.fetchHotMovies();
 		for (Movie movie : hotMovies) {
@@ -54,17 +54,22 @@ public class UpdateMovieListJob extends TimerTask {
 		for (int i = 1; i < splited.length; i++) {
 			String movieContext = splited[i];
 			String snippets[] = movieContext.split("\"");
-
-			String name, image, url;
-
-			// fetch image
-			image = snippets[21];
+			String name, image, url = "";
 
 			// fetch name
 			name = snippets[23];
 
 			// fetch url
-			url = snippets[19].split("\\*")[1];
+			for (int j = 0; j < snippets.length; j++) {
+				if (snippets[j]
+						.startsWith("https://tw.rd.yahoo.com/referurl/movie/thisweek/info/*https://tw.movies.yahoo.com/movieinfo_main.html")) {
+					url = snippets[j].split("\\*")[1];
+					break;
+				}
+			}
+
+			// fetch image
+			image = fetchImageByUrl(url);
 
 			Movie movie = new Movie();
 			movie.setName(name);
@@ -118,8 +123,8 @@ public class UpdateMovieListJob extends TimerTask {
 		String id = url.split("id=")[1];
 		String id1 = id.substring(0, 2);
 		String id2 = id.substring(2, 4);
-		String image = "https://s.yimg.com/fp/mpost2/" + id1 + "/" + id2 + "/"
-				+ id1 + id2 + ".jpg";
+		String image = "https://s.yimg.com/vu/movies/fp/mpost/" + id1 + "/"
+				+ id2 + "/" + id1 + id2 + ".jpg";
 		return image;
 	}
 

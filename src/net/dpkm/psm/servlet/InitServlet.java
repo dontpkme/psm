@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.dpkm.psm.job.InitArticleDataJob;
-import net.dpkm.psm.job.UpdateMovieListJob;
 import net.dpkm.psm.job.UpdateArticleDataJob;
+import net.dpkm.psm.job.UpdateMovieListJob;
 
 public class InitServlet extends HttpServlet {
 
@@ -19,11 +19,12 @@ public class InitServlet extends HttpServlet {
 
 	@Override
 	public void init() {
-		System.out.println("==================Movie List is Updating==================");
+		System.out
+				.println("==================Movie List is Updating==================");
 		Timer timer = new Timer();
 		UpdateMovieListJob umlJob = new UpdateMovieListJob();
 		timer.schedule(umlJob, 0);
-		
+
 		UpdateArticleDataJob uadJob = new UpdateArticleDataJob();
 		timer.scheduleAtFixedRate(uadJob, 0, 1000 * 60 * 10);
 	}
