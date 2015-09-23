@@ -117,7 +117,7 @@ var util = util || function() {
         $.ajax({
           url: "api/v1/article_list?id=" + id,
           cache: false,
-          async: false,
+          // async: false,
           success: function(data) {
             articles[id] = data;
             renderArticles(data);
